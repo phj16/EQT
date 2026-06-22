@@ -4,15 +4,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>디지털 트윈 지진 시뮬레이터</title>
+<title>Digital Twin Earthquake Simulator</title>
 
 <style>
 
 body{
     margin:0;
-    font-family:Arial,sans-serif;
-    background:#eef2f7;
+    font-family:'Segoe UI',sans-serif;
+    background:#eef3f8;
 }
 
 header{
@@ -28,7 +27,7 @@ header{
 }
 
 button{
-    padding:10px 18px;
+    padding:10px 20px;
     border:none;
     border-radius:8px;
     background:#2563eb;
@@ -36,202 +35,35 @@ button{
     cursor:pointer;
 }
 
-.city{
+button:hover{
+    background:#1d4ed8;
+}
+
+.container{
     display:flex;
     justify-content:center;
-    gap:80px;
+    gap:40px;
     flex-wrap:wrap;
-    margin-top:30px;
 }
 
 .model{
     text-align:center;
 }
 
-.structure{
-    position:relative;
-    width:140px;
-    height:300px;
-    transform-origin:bottom center;
+svg{
+    overflow:visible;
 }
 
-/* 나무젓가락 기둥 */
-
-.column{
-    position:absolute;
-    width:10px;
-    height:260px;
-
-    background:
-    linear-gradient(
-        90deg,
-        #c6924f,
-        #e9c58a,
-        #c6924f
-    );
-
-    border:1px solid #8b6234;
-}
-
-.left{
-    left:20px;
-}
-
-.right{
-    right:20px;
-}
-
-/* 골판지 층 */
-
-.floor{
-
-    position:absolute;
-    left:10px;
-
-    width:120px;
-    height:12px;
-
-    background:
-    repeating-linear-gradient(
-        90deg,
-        #d9b16f,
-        #d9b16f 4px,
-        #c6974d 4px,
-        #c6974d 8px
-    );
-
-    border:1px solid #8a6735;
-}
-
-.f1{top:50px;}
-.f2{top:100px;}
-.f3{top:150px;}
-.f4{top:200px;}
-.roof{top:250px;}
-
-/* 아이스크림 막대 X */
-
-.brace{
-    position:absolute;
-    width:120px;
-    height:50px;
-    left:10px;
-}
-
-.brace::before,
-.brace::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:135px;
-    height:8px;
-
-    background:
-    linear-gradient(
-        90deg,
-        #f3e2bc,
-        #e3c68c,
-        #f3e2bc
-    );
-
-    border:1px solid #b08d53;
-}
-
-.brace::before{
-    transform:rotate(20deg);
-    top:20px;
-    left:-8px;
-}
-
-.brace::after{
-    transform:rotate(-20deg);
-    top:20px;
-    left:-8px;
-}
-
-.b1{top:0;}
-.b2{top:50px;}
-.b3{top:100px;}
-.b4{top:150px;}
-
-/* 쇠구슬 */
-
-.weight,
-.ball{
-
-    border-radius:50%;
-
-    background:
-    radial-gradient(
-        circle at 30% 30%,
-        #ffffff,
-        #d0d5db,
-        #808892,
-        #4d5560
-    );
-
-    box-shadow:
-    inset -5px -5px 8px rgba(0,0,0,.35),
-    0 0 6px rgba(255,255,255,.5);
-}
-
-/* 제진 */
-
-.cable{
-    position:absolute;
-    width:2px;
-    height:50px;
-    background:black;
-    left:69px;
-}
-
-.weight{
-    position:absolute;
-    width:28px;
-    height:28px;
-    left:56px;
-    top:48px;
-}
-
-/* 면진 */
-
-.isolator{
-    display:flex;
-    justify-content:space-around;
-    width:120px;
-    margin:auto;
-}
-
-.ball{
-    width:20px;
-    height:20px;
-}
-
-/* 바닥 */
-
-.ground{
-    width:160px;
-    height:20px;
-    background:#444;
-    margin:auto;
-}
-
-.label{
-    margin-top:10px;
-    font-weight:bold;
-}
-
-/* 디지털 트윈 */
+/* 설명 패널 */
 
 .panel{
-    width:800px;
+    width:900px;
     max-width:90%;
     background:white;
-    margin:50px auto;
+    margin:40px auto;
     padding:20px;
-    border-radius:10px;
+    border-radius:12px;
+    box-shadow:0 0 10px rgba(0,0,0,.1);
 }
 
 .flow{
@@ -243,7 +75,7 @@ button{
 
 .step{
     background:#dbeafe;
-    padding:10px;
+    padding:10px 15px;
     border-radius:8px;
 }
 
@@ -254,7 +86,7 @@ button{
 
 <header>
 <h1>🏢 Digital Twin Earthquake Simulator</h1>
-<p>내진 · 제진 · 면진 구조 비교</p>
+<p>내진 · 제진 · 면진 구조 비교 실험</p>
 </header>
 
 <div class="controls">
@@ -263,108 +95,171 @@ button{
 
 <input
 type="range"
-id="intensity"
+id="power"
 min="1"
 max="10"
 value="5">
 
 <span id="value">5</span>
 
-<button onclick="startQuake()">
+<button onclick="earthquake()">
 지진 발생
 </button>
 
 </div>
 
-<div class="city">
+<div class="container">
 
-<!-- 내진 -->
-
-<div class="model">
-
-<div class="structure" id="naejin">
-
-<div class="column left"></div>
-<div class="column right"></div>
-
-<div class="floor f1"></div>
-<div class="floor f2"></div>
-<div class="floor f3"></div>
-<div class="floor f4"></div>
-<div class="floor roof"></div>
-
-<div class="brace b1"></div>
-<div class="brace b2"></div>
-<div class="brace b3"></div>
-<div class="brace b4"></div>
-
-</div>
-
-<div class="ground"></div>
-
-<div class="label">
-내진 구조
-</div>
-
-</div>
-
-<!-- 제진 -->
+<!-- ================== 내진 ================== -->
 
 <div class="model">
 
-<div class="structure" id="jejin">
+<svg width="250" height="420">
 
-<div class="column left"></div>
-<div class="column right"></div>
+<defs>
 
-<div class="cable"></div>
-<div class="weight" id="weight"></div>
+<linearGradient id="wood">
+<stop offset="0%" stop-color="#c68d4c"/>
+<stop offset="50%" stop-color="#e3bc84"/>
+<stop offset="100%" stop-color="#c68d4c"/>
+</linearGradient>
 
-<div class="floor f1"></div>
-<div class="floor f2"></div>
-<div class="floor f3"></div>
-<div class="floor f4"></div>
-<div class="floor roof"></div>
+<linearGradient id="cardboard">
+<stop offset="0%" stop-color="#c79652"/>
+<stop offset="100%" stop-color="#e2bb7e"/>
+</linearGradient>
+
+<linearGradient id="stick">
+<stop offset="0%" stop-color="#e8d2a4"/>
+<stop offset="100%" stop-color="#f7e6bf"/>
+</linearGradient>
+
+<radialGradient id="steel">
+<stop offset="0%" stop-color="#ffffff"/>
+<stop offset="35%" stop-color="#d7dde3"/>
+<stop offset="70%" stop-color="#838c96"/>
+<stop offset="100%" stop-color="#49505a"/>
+</radialGradient>
+
+</defs>
+
+<g id="naejin">
+
+<!-- 기둥 -->
+
+<rect x="50" y="40" width="10" height="280" fill="url(#wood)"/>
+<rect x="190" y="40" width="10" height="280" fill="url(#wood)"/>
+
+<!-- 층 -->
+
+<rect x="40" y="90" width="170" height="12" fill="url(#cardboard)"/>
+<rect x="40" y="145" width="170" height="12" fill="url(#cardboard)"/>
+<rect x="40" y="200" width="170" height="12" fill="url(#cardboard)"/>
+<rect x="40" y="255" width="170" height="12" fill="url(#cardboard)"/>
+<rect x="40" y="310" width="170" height="12" fill="url(#cardboard)"/>
+
+<!-- X 가새 -->
+
+<line x1="50" y1="40" x2="190" y2="90"
+stroke="url(#stick)" stroke-width="10"/>
+
+<line x1="190" y1="40" x2="50" y2="90"
+stroke="url(#stick)" stroke-width="10"/>
+
+<line x1="50" y1="90" x2="190" y2="145"
+stroke="url(#stick)" stroke-width="10"/>
+
+<line x1="190" y1="90" x2="50" y2="145"
+stroke="url(#stick)" stroke-width="10"/>
+
+<line x1="50" y1="145" x2="190" y2="200"
+stroke="url(#stick)" stroke-width="10"/>
+
+<line x1="190" y1="145" x2="50" y2="200"
+stroke="url(#stick)" stroke-width="10"/>
+
+</g>
+
+<rect x="20" y="350" width="210" height="20" fill="#444"/>
+
+</svg>
+
+<h3>내진 구조</h3>
 
 </div>
 
-<div class="ground"></div>
-
-<div class="label">
-제진 구조
-</div>
-
-</div>
-
-<!-- 면진 -->
+<!-- ================== 제진 ================== -->
 
 <div class="model">
 
-<div class="structure" id="myeonjin">
+<svg width="250" height="420">
 
-<div class="column left"></div>
-<div class="column right"></div>
+<g id="jejin">
 
-<div class="floor f1"></div>
-<div class="floor f2"></div>
-<div class="floor f3"></div>
-<div class="floor f4"></div>
-<div class="floor roof"></div>
+<rect x="50" y="40" width="10" height="280" fill="url(#wood)"/>
+<rect x="190" y="40" width="10" height="280" fill="url(#wood)"/>
+
+<rect x="40" y="90" width="170" height="12" fill="url(#cardboard)"/>
+<rect x="40" y="145" width="170" height="12" fill="url(#cardboard)"/>
+<rect x="40" y="200" width="170" height="12" fill="url(#cardboard)"/>
+<rect x="40" y="255" width="170" height="12" fill="url(#cardboard)"/>
+<rect x="40" y="310" width="170" height="12" fill="url(#cardboard)"/>
+
+<line id="cable"
+x1="125" y1="40"
+x2="125" y2="95"
+stroke="black"
+stroke-width="2"/>
+
+<circle id="weight"
+cx="125"
+cy="112"
+r="18"
+fill="url(#steel)"/>
+
+</g>
+
+<rect x="20" y="350" width="210" height="20" fill="#444"/>
+
+</svg>
+
+<h3>제진 구조</h3>
 
 </div>
 
-<div class="isolator" id="isolator">
-<div class="ball"></div>
-<div class="ball"></div>
-<div class="ball"></div>
-<div class="ball"></div>
-</div>
+<!-- ================== 면진 ================== -->
 
-<div class="ground"></div>
+<div class="model">
 
-<div class="label">
-면진 구조
-</div>
+<svg width="250" height="420">
+
+<g id="myeonjin">
+
+<rect x="50" y="40" width="10" height="280" fill="url(#wood)"/>
+<rect x="190" y="40" width="10" height="280" fill="url(#wood)"/>
+
+<rect x="40" y="90" width="170" height="12" fill="url(#cardboard)"/>
+<rect x="40" y="145" width="170" height="12" fill="url(#cardboard)"/>
+<rect x="40" y="200" width="170" height="12" fill="url(#cardboard)"/>
+<rect x="40" y="255" width="170" height="12" fill="url(#cardboard)"/>
+<rect x="40" y="310" width="170" height="12" fill="url(#cardboard)"/>
+
+</g>
+
+<g id="isolator">
+
+<circle cx="70" cy="340" r="12" fill="url(#steel)"/>
+<circle cx="110" cy="340" r="12" fill="url(#steel)"/>
+<circle cx="150" cy="340" r="12" fill="url(#steel)"/>
+<circle cx="190" cy="340" r="12" fill="url(#steel)"/>
+
+</g>
+
+<rect x="20" y="360" width="210" height="20" fill="#444"/>
+
+</svg>
+
+<h3>면진 구조</h3>
 
 </div>
 
@@ -372,7 +267,7 @@ value="5">
 
 <div class="panel">
 
-<h2>Digital Twin</h2>
+<h2>🌐 Digital Twin</h2>
 
 <div class="flow">
 <div class="step">실제 건물</div>
@@ -387,14 +282,14 @@ value="5">
 <script>
 
 const slider =
-document.getElementById("intensity");
+document.getElementById("power");
 
 slider.oninput = ()=>{
 document.getElementById("value").textContent =
 slider.value;
 };
 
-function startQuake(){
+function earthquake(){
 
 const power =
 Number(slider.value);
@@ -411,6 +306,9 @@ document.getElementById("myeonjin");
 const weight =
 document.getElementById("weight");
 
+const cable =
+document.getElementById("cable");
+
 const isolator =
 document.getElementById("isolator");
 
@@ -421,38 +319,54 @@ const timer = setInterval(()=>{
 frame++;
 
 const wave =
-Math.sin(frame * 0.25);
+Math.sin(frame * 0.22);
 
 /* 내진 */
 
-naejin.style.transform =
-`rotate(${wave*power*2.2}deg)`;
+naejin.setAttribute(
+"transform",
+`rotate(${wave*power*2.5} 125 350)`
+);
 
 /* 제진 */
 
-jejin.style.transform =
-`rotate(${wave*power*1.0}deg)`;
+jejin.setAttribute(
+"transform",
+`rotate(${wave*power*1.2} 125 350)`
+);
 
-weight.style.transform =
-`translateX(${-wave*power*12}px)`;
+/* 제진추 */
+
+const x =
+125 - wave*power*7;
+
+weight.setAttribute("cx",x);
+
+cable.setAttribute("x2",x);
 
 /* 면진 */
 
-myeonjin.style.transform =
-`rotate(${wave*power*0.25}deg)`;
+myeonjin.setAttribute(
+"transform",
+`rotate(${wave*power*0.3} 125 350)`
+);
 
-isolator.style.transform =
-`translateX(${wave*power*14}px)`;
+isolator.setAttribute(
+"transform",
+`translate(${wave*power*12},0)`
+);
 
 if(frame > 220){
 
 clearInterval(timer);
 
-naejin.style.transform="";
-jejin.style.transform="";
-myeonjin.style.transform="";
-weight.style.transform="";
-isolator.style.transform="";
+naejin.removeAttribute("transform");
+jejin.removeAttribute("transform");
+myeonjin.removeAttribute("transform");
+isolator.removeAttribute("transform");
+
+weight.setAttribute("cx",125);
+cable.setAttribute("x2",125);
 }
 
 },25);
