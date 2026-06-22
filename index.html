@@ -4,75 +4,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>디지털 트윈 내진·제진·면진 시뮬레이터</title>
+
+<title>디지털 트윈 지진 시뮬레이터</title>
 
 <style>
 
 body{
     margin:0;
     font-family:Arial,sans-serif;
-    background:#eef3f8;
-    text-align:center;
+    background:#eef2f7;
 }
 
 header{
     background:#1e293b;
     color:white;
+    text-align:center;
     padding:20px;
 }
 
 .controls{
+    text-align:center;
     margin:20px;
 }
 
-.city{
-    display:flex;
-    justify-content:center;
-    gap:120px;
-    margin-top:50px;
-}
-
-.model{
-    width:180px;
-}
-
-.building{
-    width:100px;
-    height:220px;
-    background:#60a5fa;
-    margin:auto;
-    position:relative;
-    transform-origin:bottom center;
-}
-
-.floor{
-    position:absolute;
-    left:0;
-    width:100%;
-    height:2px;
-    background:#ffffff88;
-}
-
-.floor:nth-child(1){top:40px;}
-.floor:nth-child(2){top:80px;}
-.floor:nth-child(3){top:120px;}
-.floor:nth-child(4){top:160px;}
-.floor:nth-child(5){top:200px;}
-
-.label{
-    margin-top:15px;
-    font-weight:bold;
-}
-
-.ground{
-    width:140px;
-    height:20px;
-    background:#444;
-    margin:auto;
-}
-
 button{
-    padding:10px 20px;
+    padding:10px 18px;
     border:none;
     border-radius:8px;
     background:#2563eb;
@@ -80,90 +36,241 @@ button{
     cursor:pointer;
 }
 
-input{
-    width:250px;
+.city{
+    display:flex;
+    justify-content:center;
+    gap:80px;
+    flex-wrap:wrap;
+    margin-top:30px;
 }
 
-.info{
-    max-width:1000px;
+.model{
+    text-align:center;
+}
+
+.structure{
+    position:relative;
+    width:140px;
+    height:300px;
+    transform-origin:bottom center;
+}
+
+/* 나무젓가락 기둥 */
+
+.column{
+    position:absolute;
+    width:10px;
+    height:260px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #c6924f,
+        #e9c58a,
+        #c6924f
+    );
+
+    border:1px solid #8b6234;
+}
+
+.left{
+    left:20px;
+}
+
+.right{
+    right:20px;
+}
+
+/* 골판지 층 */
+
+.floor{
+
+    position:absolute;
+    left:10px;
+
+    width:120px;
+    height:12px;
+
+    background:
+    repeating-linear-gradient(
+        90deg,
+        #d9b16f,
+        #d9b16f 4px,
+        #c6974d 4px,
+        #c6974d 8px
+    );
+
+    border:1px solid #8a6735;
+}
+
+.f1{top:50px;}
+.f2{top:100px;}
+.f3{top:150px;}
+.f4{top:200px;}
+.roof{top:250px;}
+
+/* 아이스크림 막대 X */
+
+.brace{
+    position:absolute;
+    width:120px;
+    height:50px;
+    left:10px;
+}
+
+.brace::before,
+.brace::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:135px;
+    height:8px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #f3e2bc,
+        #e3c68c,
+        #f3e2bc
+    );
+
+    border:1px solid #b08d53;
+}
+
+.brace::before{
+    transform:rotate(20deg);
+    top:20px;
+    left:-8px;
+}
+
+.brace::after{
+    transform:rotate(-20deg);
+    top:20px;
+    left:-8px;
+}
+
+.b1{top:0;}
+.b2{top:50px;}
+.b3{top:100px;}
+.b4{top:150px;}
+
+/* 쇠구슬 */
+
+.weight,
+.ball{
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        circle at 30% 30%,
+        #ffffff,
+        #d0d5db,
+        #808892,
+        #4d5560
+    );
+
+    box-shadow:
+    inset -5px -5px 8px rgba(0,0,0,.35),
+    0 0 6px rgba(255,255,255,.5);
+}
+
+/* 제진 */
+
+.cable{
+    position:absolute;
+    width:2px;
+    height:50px;
+    background:black;
+    left:69px;
+}
+
+.weight{
+    position:absolute;
+    width:28px;
+    height:28px;
+    left:56px;
+    top:48px;
+}
+
+/* 면진 */
+
+.isolator{
+    display:flex;
+    justify-content:space-around;
+    width:120px;
     margin:auto;
-    margin-top:40px;
+}
+
+.ball{
+    width:20px;
+    height:20px;
+}
+
+/* 바닥 */
+
+.ground{
+    width:160px;
+    height:20px;
+    background:#444;
+    margin:auto;
+}
+
+.label{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+/* 디지털 트윈 */
+
+.panel{
+    width:800px;
+    max-width:90%;
     background:white;
+    margin:50px auto;
     padding:20px;
     border-radius:10px;
 }
 
-/* 내진 X 트러스 */
-
-.truss1,
-.truss2{
-    position:absolute;
-    width:140px;
-    height:4px;
-    background:white;
-    top:110px;
-    left:-20px;
-}
-
-.truss1{
-    transform:rotate(60deg);
-}
-
-.truss2{
-    transform:rotate(-60deg);
-}
-
-/* 제진 추 */
-
-.damper{
-    width:25px;
-    height:25px;
-    background:#ef4444;
-    border-radius:50%;
-    position:absolute;
-    top:-40px;
-    left:37px;
-}
-
-/* 면진 구슬 */
-
-.isolator{
+.flow{
     display:flex;
     justify-content:center;
-    gap:8px;
-    margin:auto;
-    width:100px;
-    height:25px;
+    gap:10px;
+    flex-wrap:wrap;
 }
 
-.ball{
-    width:18px;
-    height:18px;
-    border-radius:50%;
-    background:#f59e0b;
+.step{
+    background:#dbeafe;
+    padding:10px;
+    border-radius:8px;
 }
 
 </style>
 </head>
+
 <body>
 
 <header>
 <h1>🏢 Digital Twin Earthquake Simulator</h1>
-<p>동일한 지진에서 내진 · 제진 · 면진 구조 비교</p>
+<p>내진 · 제진 · 면진 구조 비교</p>
 </header>
 
 <div class="controls">
 
-진도 :
-<input type="range"
-       id="intensity"
-       min="1"
-       max="10"
-       value="5">
+진도
+
+<input
+type="range"
+id="intensity"
+min="1"
+max="10"
+value="5">
 
 <span id="value">5</span>
 
-<button onclick="quake()">
+<button onclick="startQuake()">
 지진 발생
 </button>
 
@@ -175,23 +282,28 @@ input{
 
 <div class="model">
 
-<div class="building" id="naejin">
+<div class="structure" id="naejin">
 
-<div class="floor"></div>
-<div class="floor"></div>
-<div class="floor"></div>
-<div class="floor"></div>
-<div class="floor"></div>
+<div class="column left"></div>
+<div class="column right"></div>
 
-<div class="truss1"></div>
-<div class="truss2"></div>
+<div class="floor f1"></div>
+<div class="floor f2"></div>
+<div class="floor f3"></div>
+<div class="floor f4"></div>
+<div class="floor roof"></div>
+
+<div class="brace b1"></div>
+<div class="brace b2"></div>
+<div class="brace b3"></div>
+<div class="brace b4"></div>
 
 </div>
 
 <div class="ground"></div>
 
 <div class="label">
-내진 구조 (X자 트러스)
+내진 구조
 </div>
 
 </div>
@@ -200,22 +312,26 @@ input{
 
 <div class="model">
 
-<div class="building" id="jejin">
+<div class="structure" id="jejin">
 
-<div class="damper" id="damper"></div>
+<div class="column left"></div>
+<div class="column right"></div>
 
-<div class="floor"></div>
-<div class="floor"></div>
-<div class="floor"></div>
-<div class="floor"></div>
-<div class="floor"></div>
+<div class="cable"></div>
+<div class="weight" id="weight"></div>
+
+<div class="floor f1"></div>
+<div class="floor f2"></div>
+<div class="floor f3"></div>
+<div class="floor f4"></div>
+<div class="floor roof"></div>
 
 </div>
 
 <div class="ground"></div>
 
 <div class="label">
-제진 구조 (TMD 추)
+제진 구조
 </div>
 
 </div>
@@ -224,13 +340,16 @@ input{
 
 <div class="model">
 
-<div class="building" id="myeonjin">
+<div class="structure" id="myeonjin">
 
-<div class="floor"></div>
-<div class="floor"></div>
-<div class="floor"></div>
-<div class="floor"></div>
-<div class="floor"></div>
+<div class="column left"></div>
+<div class="column right"></div>
+
+<div class="floor f1"></div>
+<div class="floor f2"></div>
+<div class="floor f3"></div>
+<div class="floor f4"></div>
+<div class="floor roof"></div>
 
 </div>
 
@@ -244,28 +363,24 @@ input{
 <div class="ground"></div>
 
 <div class="label">
-면진 구조 (구슬 받침)
+면진 구조
 </div>
 
 </div>
 
 </div>
 
-<div class="info">
+<div class="panel">
 
-<h2>디지털 트윈</h2>
+<h2>Digital Twin</h2>
 
-<p>
-실제 건물을 가상 공간에 복제한 뒤
-동일한 지진파를 적용하여
-건물의 반응을 분석한다.
-</p>
-
-<p>
-내진 : 구조를 강화하여 버틴다.<br>
-제진 : 무게추가 반대로 움직여 진동을 줄인다.<br>
-면진 : 건물과 지반을 분리하여 흔들림 전달을 차단한다.
-</p>
+<div class="flow">
+<div class="step">실제 건물</div>
+<div class="step">센서 데이터</div>
+<div class="step">디지털 트윈 모델</div>
+<div class="step">지진 시뮬레이션</div>
+<div class="step">피해 예측</div>
+</div>
 
 </div>
 
@@ -274,11 +389,12 @@ input{
 const slider =
 document.getElementById("intensity");
 
-slider.oninput = () =>
-document.getElementById("value").innerText =
+slider.oninput = ()=>{
+document.getElementById("value").textContent =
 slider.value;
+};
 
-function quake(){
+function startQuake(){
 
 const power =
 Number(slider.value);
@@ -292,45 +408,51 @@ document.getElementById("jejin");
 const myeonjin =
 document.getElementById("myeonjin");
 
-const damper =
-document.getElementById("damper");
+const weight =
+document.getElementById("weight");
 
 const isolator =
 document.getElementById("isolator");
 
-let t = 0;
+let frame = 0;
 
 const timer = setInterval(()=>{
 
-t++;
+frame++;
 
 const wave =
-Math.sin(t*0.3);
+Math.sin(frame * 0.25);
+
+/* 내진 */
 
 naejin.style.transform =
-`rotate(${wave*power*1.2}deg)`;
+`rotate(${wave*power*2.2}deg)`;
+
+/* 제진 */
 
 jejin.style.transform =
-`rotate(${wave*power*0.7}deg)`;
+`rotate(${wave*power*1.0}deg)`;
 
-damper.style.transform =
-`translateX(${-wave*power*4}px)`;
+weight.style.transform =
+`translateX(${-wave*power*12}px)`;
+
+/* 면진 */
 
 myeonjin.style.transform =
-`rotate(${wave*power*0.2}deg)`;
+`rotate(${wave*power*0.25}deg)`;
 
 isolator.style.transform =
-`translateX(${wave*power*5}px)`;
+`translateX(${wave*power*14}px)`;
 
-if(t>180){
+if(frame > 220){
 
 clearInterval(timer);
 
-naejin.style.transform="rotate(0deg)";
-jejin.style.transform="rotate(0deg)";
-myeonjin.style.transform="rotate(0deg)";
-damper.style.transform="translateX(0)";
-isolator.style.transform="translateX(0)";
+naejin.style.transform="";
+jejin.style.transform="";
+myeonjin.style.transform="";
+weight.style.transform="";
+isolator.style.transform="";
 }
 
 },25);
