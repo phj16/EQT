@@ -16,8 +16,8 @@
 }
 
 body{
-    background:#eef2f7;
     font-family:Arial,sans-serif;
+    background:#eef2f7;
 }
 
 header{
@@ -32,6 +32,10 @@ header{
     padding:20px;
 }
 
+input[type=range]{
+    width:250px;
+}
+
 button{
     padding:10px 20px;
     border:none;
@@ -39,6 +43,7 @@ button{
     background:#2563eb;
     color:white;
     cursor:pointer;
+    margin-left:10px;
 }
 
 button:hover{
@@ -48,43 +53,40 @@ button:hover{
 .container{
     display:flex;
     justify-content:center;
-    gap:40px;
+    gap:30px;
     flex-wrap:wrap;
-    margin-top:20px;
+    margin:20px;
 }
 
 .card{
     background:white;
+    padding:15px;
     border-radius:12px;
-    padding:20px;
-    box-shadow:0 0 10px rgba(0,0,0,.1);
-}
-
-svg{
-    overflow:visible;
+    box-shadow:0 0 10px rgba(0,0,0,.15);
 }
 
 .title{
     text-align:center;
     margin-top:10px;
     font-weight:bold;
+    font-size:20px;
 }
 
 .result{
     text-align:center;
-    margin-top:8px;
+    margin-top:6px;
     color:#2563eb;
     font-weight:bold;
 }
 
 .panel{
-    width:1000px;
+    width:1100px;
     max-width:95%;
+    margin:30px auto;
     background:white;
-    margin:40px auto;
-    border-radius:12px;
     padding:20px;
-    box-shadow:0 0 10px rgba(0,0,0,.1);
+    border-radius:12px;
+    box-shadow:0 0 10px rgba(0,0,0,.15);
 }
 
 .flow{
@@ -102,17 +104,17 @@ svg{
 }
 
 .graph{
-    margin-top:30px;
+    margin-top:25px;
 }
 
 .bar{
-    height:30px;
-    margin:10px 0;
+    height:35px;
     color:white;
     display:flex;
     align-items:center;
-    padding-left:10px;
-    border-radius:5px;
+    padding-left:12px;
+    margin:10px 0;
+    border-radius:6px;
 }
 
 .naejinBar{
@@ -128,6 +130,17 @@ svg{
 .myeonjinBar{
     width:18%;
     background:#10b981;
+}
+
+#liveData{
+    margin-top:25px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+}
+
+svg{
+    overflow:visible;
 }
 
 </style>
@@ -175,66 +188,47 @@ value="5">
 <defs>
 
 <linearGradient id="wood">
-
 <stop offset="0%" stop-color="#c48b48"/>
 <stop offset="50%" stop-color="#e6c28d"/>
 <stop offset="100%" stop-color="#c48b48"/>
-
 </linearGradient>
 
 <radialGradient id="steel">
-
 <stop offset="0%" stop-color="#ffffff"/>
 <stop offset="40%" stop-color="#d3d9df"/>
 <stop offset="80%" stop-color="#7f8791"/>
 <stop offset="100%" stop-color="#49505a"/>
-
 </radialGradient>
 
 </defs>
 
 <g id="naejin">
 
-<!-- 기둥 -->
-
 <rect x="60" y="40" width="8" height="300" fill="url(#wood)"/>
 <rect x="172" y="40" width="8" height="300" fill="url(#wood)"/>
 
-<rect x="40" y="170" width="160" height="8" fill="#caa56b"/>
 <rect x="40" y="40" width="160" height="8" fill="#caa56b"/>
-
+<rect x="40" y="170" width="160" height="8" fill="#caa56b"/>
 <rect x="40" y="340" width="160" height="8" fill="#caa56b"/>
 
-<!-- 위층 X -->
+<line x1="60" y1="48" x2="180" y2="170"
+stroke="#ead4a6" stroke-width="8"/>
 
-<line x1="60" y1="48"
-      x2="180" y2="170"
-      stroke="#ead4a6"
-      stroke-width="8"/>
+<line x1="180" y1="48" x2="60" y2="170"
+stroke="#ead4a6" stroke-width="8"/>
 
-<line x1="180" y1="48"
-      x2="60" y2="170"
-      stroke="#ead4a6"
-      stroke-width="8"/>
+<line x1="60" y1="170" x2="180" y2="340"
+stroke="#ead4a6" stroke-width="8"/>
 
-<!-- 아래층 X -->
-
-<line x1="60" y1="170"
-      x2="180" y2="340"
-      stroke="#ead4a6"
-      stroke-width="8"/>
-
-<line x1="180" y1="170"
-      x2="60" y2="340"
-      stroke="#ead4a6"
-      stroke-width="8"/>
+<line x1="180" y1="170" x2="60" y2="340"
+stroke="#ead4a6" stroke-width="8"/>
 
 </g>
 
 </svg>
 
 <div class="title">내진 구조</div>
-<div class="result">물 유출량 28.2g</div>
+<div class="result">실험 결과 : 28.2g</div>
 
 </div>
 
@@ -249,30 +243,31 @@ value="5">
 <rect x="60" y="40" width="8" height="300" fill="url(#wood)"/>
 <rect x="172" y="40" width="8" height="300" fill="url(#wood)"/>
 
-<rect x="40" y="170" width="160" height="8" fill="#caa56b"/>
 <rect x="40" y="40" width="160" height="8" fill="#caa56b"/>
+<rect x="40" y="170" width="160" height="8" fill="#caa56b"/>
 <rect x="40" y="340" width="160" height="8" fill="#caa56b"/>
 
 <line id="rope"
-      x1="120"
-      y1="48"
-      x2="120"
-      y2="110"
-      stroke="#999"
-      stroke-width="2"/>
+x1="120"
+y1="48"
+x2="120"
+y2="110"
+stroke="#666"
+stroke-width="2"/>
 
-<circle id="weight"
-        cx="120"
-        cy="125"
-        r="18"
-        fill="url(#steel)"/>
+<circle
+id="weight"
+cx="120"
+cy="125"
+r="18"
+fill="url(#steel)"/>
 
 </g>
 
 </svg>
 
 <div class="title">제진 구조</div>
-<div class="result">물 유출량 19.7g</div>
+<div class="result">실험 결과 : 19.7g</div>
 
 </div>
 
@@ -284,11 +279,11 @@ value="5">
 
 <g id="myeonjin">
 
-<rect x="60" y="40" width="8" height="300" fill="url(#wood)"/>
-<rect x="172" y="40" width="8" height="300" fill="url(#wood)"/>
+<rect x="60" y="40" width="8" height="260" fill="url(#wood)"/>
+<rect x="172" y="40" width="8" height="260" fill="url(#wood)"/>
 
-<rect x="40" y="170" width="160" height="8" fill="#caa56b"/>
 <rect x="40" y="40" width="160" height="8" fill="#caa56b"/>
+<rect x="40" y="170" width="160" height="8" fill="#caa56b"/>
 <rect x="40" y="300" width="160" height="8" fill="#caa56b"/>
 
 </g>
@@ -313,7 +308,7 @@ stroke-width="3"/>
 </svg>
 
 <div class="title">면진 구조</div>
-<div class="result">물 유출량 5.0g</div>
+<div class="result">실험 결과 : 5.0g</div>
 
 </div>
 
@@ -324,18 +319,18 @@ stroke-width="3"/>
 <h2>🌐 Digital Twin 분석</h2>
 
 <div class="flow">
-
 <div class="step">실제 모형</div>
 <div class="step">센서 데이터</div>
 <div class="step">디지털 트윈</div>
 <div class="step">지진 시뮬레이션</div>
 <div class="step">피해 예측</div>
+</div>
 
+<div id="liveData">
+지진 대기 중...
 </div>
 
 <div class="graph">
-
-<h3>실험 결과 비교</h3>
 
 <div class="bar naejinBar">
 내진 28.2g
@@ -354,8 +349,8 @@ stroke-width="3"/>
 </div>
 
 <script>
-
-/* 다음 단계에서 애니메이션 추가 */
+```
+```javascript id="l6q6hs"
 
 const slider =
 document.getElementById("power");
@@ -363,14 +358,11 @@ document.getElementById("power");
 const value =
 document.getElementById("value");
 
-value.textContent = slider.value;
-
-slider.addEventListener("input",()=>{
-    value.textContent = slider.value;
-});
-
 const startBtn =
 document.getElementById("startBtn");
+
+const liveData =
+document.getElementById("liveData");
 
 const naejin =
 document.getElementById("naejin");
@@ -381,27 +373,23 @@ document.getElementById("jejin");
 const myeonjin =
 document.getElementById("myeonjin");
 
-const rope =
-document.getElementById("rope");
-
 const weight =
 document.getElementById("weight");
+
+const rope =
+document.getElementById("rope");
 
 const isolator =
 document.getElementById("isolator");
 
-/* 결과 표시 영역 생성 */
+value.textContent = slider.value;
 
-const resultPanel =
-document.createElement("div");
+slider.addEventListener("input",()=>{
 
-resultPanel.style.marginTop="20px";
-resultPanel.style.fontSize="18px";
-resultPanel.style.fontWeight="bold";
-resultPanel.style.textAlign="center";
+    value.textContent =
+    slider.value;
 
-document.querySelector(".panel")
-.appendChild(resultPanel);
+});
 
 let running = false;
 
@@ -411,61 +399,75 @@ startBtn.addEventListener("click",()=>{
 
     running = true;
 
-    simulateEarthquake();
+    runEarthquake();
 
 });
 
-function simulateEarthquake(){
+function runEarthquake(){
 
     let frame = 0;
 
     const intensity =
     Number(slider.value);
 
-    const duration = 1000;
-
     let spillN = 0;
     let spillJ = 0;
     let spillM = 0;
+
+    const duration = 720;
 
     const timer =
     setInterval(()=>{
 
         frame++;
 
-        /* 실제 실험 2Hz */
+        /*
+        실제 실험
+        약 2Hz
+        */
 
-        const t = frame / 60;
+        const t =
+        frame / 60;
 
-        const quake =
-        Math.sin(t * Math.PI * 4);
+        const wave =
+        Math.sin(
+        t * Math.PI * 4
+        );
 
         /* 내진 */
 
-        const nAngle =
-        quake * intensity * 3.2;
+        const moveN =
+        wave *
+        intensity *
+        12;
 
         naejin.setAttribute(
         "transform",
-        `rotate(${nAngle} 120 340)`
+        `translate(${moveN},0)`
         );
 
         /* 제진 */
 
-        const jAngle =
-        quake * intensity * 2.0;
+        const moveJ =
+        wave *
+        intensity *
+        7;
 
         jejin.setAttribute(
         "transform",
-        `rotate(${jAngle} 120 340)`
+        `translate(${moveJ},0)`
         );
 
         /* 제진추 */
 
         const pendulum =
         Math.sin(
-            t * Math.PI * 3.5
-        ) * intensity * 8;
+        t * Math.PI * 3.5
+        )
+        *
+        intensity
+        *
+        12;
 
         weight.setAttribute(
         "cx",
@@ -479,41 +481,49 @@ function simulateEarthquake(){
 
         /* 면진 */
 
-        const mAngle =
-        quake * intensity * 0.7;
+        const moveM =
+        wave *
+        intensity *
+        2;
 
         myeonjin.setAttribute(
         "transform",
-        `rotate(${mAngle} 120 300)`
+        `translate(${moveM},0)`
         );
 
-        const isoMove =
-        quake * intensity * 12;
+        const bearing =
+        wave *
+        intensity *
+        15;
 
         isolator.setAttribute(
         "transform",
-        `translate(${isoMove},0)`
+        `translate(${bearing},0)`
         );
 
         /* 유출량 계산 */
 
         spillN +=
-        Math.abs(nAngle)*0.018;
+        Math.abs(moveN)
+        *
+        0.010;
 
         spillJ +=
-        Math.abs(jAngle)*0.013;
+        Math.abs(moveJ)
+        *
+        0.008;
 
         spillM +=
-        Math.abs(mAngle)*0.005;
+        Math.abs(moveM)
+        *
+        0.003;
 
-        resultPanel.innerHTML =
+        liveData.innerHTML =
 
         `
-        <div>
-        현재 유출량
-        </div>
+        현재 물 유출량
 
-        <br>
+        <br><br>
 
         내진 :
         ${spillN.toFixed(1)} g
@@ -543,48 +553,68 @@ function simulateEarthquake(){
 
 function finishSimulation(){
 
-    naejin.removeAttribute("transform");
-    jejin.removeAttribute("transform");
-    myeonjin.removeAttribute("transform");
+    naejin.removeAttribute(
+    "transform"
+    );
 
-    isolator.removeAttribute("transform");
+    jejin.removeAttribute(
+    "transform"
+    );
 
-    weight.setAttribute("cx",120);
+    myeonjin.removeAttribute(
+    "transform"
+    );
 
-    rope.setAttribute("x2",120);
+    isolator.removeAttribute(
+    "transform"
+    );
 
-    resultPanel.innerHTML =
+    weight.setAttribute(
+    "cx",
+    120
+    );
+
+    rope.setAttribute(
+    "x2",
+    120
+    );
+
+    liveData.innerHTML =
 
     `
-    <h2>
+    <h3>
     실험 종료
-    </h2>
+    </h3>
 
     <br>
 
-    <b>실제 측정 결과</b>
+    실제 측정 결과
 
     <br><br>
 
-    내진 : 28.2 g
+    🔴 내진 : 28.2 g
 
     <br>
 
-    제진 : 19.7 g
+    🟠 제진 : 19.7 g
 
     <br>
 
-    면진 : 5.0 g
+    🟢 면진 : 5.0 g
 
     <br><br>
 
-    면진 구조가
-    가장 뛰어난 성능을 보였습니다.
+    가장 적은 물이
+    유출된 구조는
+    <b>면진 구조</b>입니다.
     `;
 
     running = false;
+
 }
+
 </script>
 
 </body>
 </html>
+```
